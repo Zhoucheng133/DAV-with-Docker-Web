@@ -46,18 +46,18 @@ export default function Register() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex items-center justify-center p-4 relative transition-colors">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex items-center justify-center p-4 sm:p-6 relative transition-colors">
       <div className="absolute top-4 right-4">
         <ThemeToggle />
       </div>
 
-      <div className="max-w-md w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl p-8 transition-colors">
-        <div className="flex flex-col items-start mb-8">
+      <div className="max-w-md w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl p-6 sm:p-8 transition-colors">
+        <div className="flex flex-col items-start mb-6 sm:mb-8">
           <div className="mb-4">
-            <img src="/icon.svg" alt="Logo" className="w-14 h-14" />
+            <img src="/icon.svg" alt="Logo" className="w-12 h-12 sm:w-14 sm:h-14" />
           </div>
-          <h1 className="text-2xl font-bold text-slate-900 dark:text-slate-100">Initialize Admin</h1>
-          <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">Set up your administrator credentials</p>
+          <h1 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-slate-100">Initialize Admin</h1>
+          <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">Set up your administrator credentials</p>
         </div>
 
         {error && (

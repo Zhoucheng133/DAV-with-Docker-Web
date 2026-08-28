@@ -198,51 +198,51 @@ export default function Dashboard() {
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex flex-col transition-colors">
       {/* Header */}
       <header className="border-b border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-900/50 backdrop-blur sticky top-0 z-30">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div>
-              <img src="/icon.svg" alt="Logo" className="w-10 h-10" />
+              <img src="/icon.svg" alt="Logo" className="w-8 h-8 sm:w-10 sm:h-10" />
             </div>
             <div>
-              <h1 className="font-bold text-slate-900 dark:text-slate-100">WebDAV Console</h1>
-              <p className="text-xs text-slate-500 dark:text-slate-400">Manage Docker-backed WebDAV instances</p>
+              <h1 className="font-bold text-slate-900 dark:text-slate-100 text-sm sm:text-base">WebDAV Console</h1>
+              <p className="text-[10px] sm:text-xs text-slate-500 dark:text-slate-400">Manage Docker-backed WebDAV instances</p>
             </div>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
             <ThemeToggle />
 
             <button
               onClick={() => fetchConfigs(true)}
               disabled={refreshing}
-              className="flex items-center gap-2 bg-white dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 px-3.5 py-2 rounded-xl text-xs font-medium text-slate-700 dark:text-slate-300 transition-all disabled:opacity-50 shadow-sm cursor-pointer"
+              className="flex items-center gap-1.5 sm:gap-2 bg-white dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 px-2.5 sm:px-3.5 py-2 rounded-xl text-xs font-medium text-slate-700 dark:text-slate-300 transition-all disabled:opacity-50 shadow-sm cursor-pointer"
             >
               <RefreshCw className={`w-3.5 h-3.5 ${refreshing ? 'animate-spin' : ''}`} />
-              <span>Refresh</span>
+              <span className="hidden xs:inline sm:inline">Refresh</span>
             </button>
 
             <button
               onClick={() => setIsLogoutModalOpen(true)}
-              className="flex items-center gap-2 bg-red-50 dark:bg-red-500/10 hover:bg-red-100 dark:hover:bg-red-500/20 border border-red-200 dark:border-red-500/20 px-3.5 py-2 rounded-xl text-xs font-medium text-red-600 dark:text-red-400 transition-all shadow-sm cursor-pointer"
+              className="flex items-center gap-1.5 sm:gap-2 bg-red-50 dark:bg-red-500/10 hover:bg-red-100 dark:hover:bg-red-500/20 border border-red-200 dark:border-red-500/20 px-2.5 sm:px-3.5 py-2 rounded-xl text-xs font-medium text-red-600 dark:text-red-400 transition-all shadow-sm cursor-pointer"
             >
               <LogOut className="w-3.5 h-3.5" />
-              <span>Logout</span>
+              <span className="hidden xs:inline sm:inline">Logout</span>
             </button>
           </div>
         </div>
       </header>
 
       {/* Main Content */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
         <div className="flex items-center justify-between mb-6">
           <div>
-            <h2 className="text-lg font-bold text-slate-900 dark:text-slate-100">Configurations</h2>
+            <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-slate-100">Configurations</h2>
             <p className="text-xs text-slate-500 dark:text-slate-400">Total items: {configs.length}</p>
           </div>
 
           <button
             onClick={openAddModal}
-            className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2.5 rounded-xl text-sm font-medium transition-all shadow-lg shadow-indigo-600/20 cursor-pointer"
+            className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-medium transition-all shadow-lg shadow-indigo-600/20 cursor-pointer"
           >
             <Plus className="w-4 h-4" />
             <span>Add Config</span>
@@ -375,9 +375,9 @@ export default function Dashboard() {
       </main>
 
       {isAddOpen && (
-        <div className="fixed inset-0 z-50 bg-slate-900/40 dark:bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl w-full max-w-lg shadow-2xl overflow-hidden">
-            <div className="px-6 py-4 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
+        <div className="fixed inset-0 z-50 bg-slate-900/40 dark:bg-slate-950/80 backdrop-blur-sm flex items-end sm:items-center justify-center sm:p-4">
+          <div className="bg-white dark:bg-slate-900 border-t sm:border border-slate-200 dark:border-slate-800 rounded-t-3xl sm:rounded-2xl w-full max-w-lg shadow-2xl overflow-hidden max-h-[90vh] flex flex-col">
+            <div className="px-6 py-4 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between shrink-0">
               <h3 className="font-bold text-slate-900 dark:text-slate-100">
                 {editItem ? 'Edit Configuration' : 'Add New Configuration'}
               </h3>
@@ -389,7 +389,7 @@ export default function Dashboard() {
               </button>
             </div>
 
-            <form onSubmit={handleSaveConfig} className="p-6 space-y-4">
+            <form onSubmit={handleSaveConfig} className="p-6 space-y-4 overflow-y-auto">
               <div>
                 <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-1.5">
                   Name
