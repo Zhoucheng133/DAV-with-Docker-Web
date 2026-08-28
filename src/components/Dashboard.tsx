@@ -25,7 +25,7 @@ interface ConfigItem {
   username: string;
   root: string;
   running: number;
-  path: string;
+  port: string;
   password?: string;
 }
 
@@ -45,7 +45,7 @@ export default function Dashboard() {
   const [formUsername, setFormUsername] = useState('');
   const [formPassword, setFormPassword] = useState('');
   const [formRoot, setFormRoot] = useState('');
-  const [formPath, setFormPath] = useState('');
+  const [formPort, setFormPort] = useState('');
   const [formRunning, setFormRunning] = useState(0);
   const [submitting, setSubmitting] = useState(false);
 
@@ -88,7 +88,7 @@ export default function Dashboard() {
     setFormUsername('');
     setFormPassword('');
     setFormRoot('');
-    setFormPath('');
+    setFormPort('');
     setFormRunning(0);
     setEditItem(null);
     setIsAddOpen(true);
@@ -100,7 +100,7 @@ export default function Dashboard() {
     setFormUsername(item.username);
     setFormPassword('');
     setFormRoot(item.root);
-    setFormPath(item.path);
+    setFormPort(item.port);
     setFormRunning(item.running);
     setIsAddOpen(true);
   };
@@ -116,7 +116,7 @@ export default function Dashboard() {
           name: formName,
           username: formUsername,
           root: formRoot,
-          path: formPath,
+          port: formPort,
           running: formRunning,
         };
         if (formPassword) {
@@ -136,7 +136,7 @@ export default function Dashboard() {
           username: formUsername,
           password: formPassword,
           root: formRoot,
-          path: formPath,
+          port: formPort,
           running: formRunning,
         };
         const res = await api.post<ApiResponse>('/api/config/add', payload);
@@ -366,10 +366,10 @@ export default function Dashboard() {
                       </div>
                       <div className="flex items-center justify-between">
                         <span className="text-slate-400 dark:text-slate-500 flex items-center gap-1.5">
-                          <Folder className="w-3.5 h-3.5" /> Container Path
+                          <Folder className="w-3.5 h-3.5" /> Port
                         </span>
-                        <span className="font-medium text-slate-800 dark:text-slate-200 truncate max-w-35" title={item.path}>
-                          {item.path}
+                        <span className="font-medium text-slate-800 dark:text-slate-200 truncate max-w-35" title={item.port}>
+                          {item.port}
                         </span>
                       </div>
                     </div>
@@ -479,13 +479,13 @@ export default function Dashboard() {
 
               <div>
                 <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-1.5">
-                  Container Path / Port Key
+                  Port (Number Only)
                 </label>
                 <input
                   type="text"
-                  value={formPath}
-                  onChange={(e) => setFormPath(e.target.value)}
-                  placeholder="e.g. /data or port mapping"
+                  value={formPort}
+                  onChange={(e) => setFormPort(e.target.value)}
+                  placeholder="e.g. 8080"
                   className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-600 text-sm focus:outline-none focus:border-indigo-500"
                   required
                 />
