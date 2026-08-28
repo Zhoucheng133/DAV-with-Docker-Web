@@ -94,6 +94,10 @@ export default function Dashboard() {
   };
 
   const openEditModal = (item: ConfigItem) => {
+    if (item.running === 1) {
+      setErrorModalMsg('Running configuration cannot be edited. Please stop the service first.');
+      return;
+    }
     setEditItem(item);
     setFormName(item.name);
     setFormUsername(item.username);
@@ -173,7 +177,11 @@ export default function Dashboard() {
     }
   };
 
-  const handleDelete = async (id: string, name: string) => {
+  const handleDelete = async (id: string, name: string, running: number) => {
+    if (running === 1) {
+      setErrorModalMsg('Running configuration cannot be deleted. Please stop the service first.');
+      return;
+    }
     setDeleteTarget({ id, name });
   };
 
@@ -304,15 +312,25 @@ export default function Dashboard() {
                       <div className="flex items-center gap-1">
                         <button
                           onClick={() => openEditModal(item)}
-                          className="p-2 bg-slate-50 dark:bg-slate-950 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 rounded-xl border border-slate-200 dark:border-slate-800 transition-all cursor-pointer"
-                          title="Edit Config"
+                          disabled={isRunning}
+                          className={`p-2 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl transition-all ${
+                            isRunning 
+                              ? 'opacity-40 cursor-not-allowed text-slate-300 dark:text-slate-700' 
+                              : 'hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 cursor-pointer'
+                          }`}
+                          title={isRunning ? "Running configuration cannot be edited" : "Edit Config"}
                         >
                           <Edit3 className="w-4 h-4" />
                         </button>
                         <button
-                          onClick={() => handleDelete(item.id, item.name)}
-                          className="p-2 bg-slate-50 dark:bg-slate-950 hover:bg-red-50 dark:hover:bg-red-500/10 text-slate-500 dark:text-slate-400 hover:text-red-600 dark:hover:text-red-400 rounded-xl border border-slate-200 dark:border-slate-800 hover:border-red-200 dark:hover:border-red-500/20 transition-all cursor-pointer"
-                          title="Delete Config"
+                          onClick={() => handleDelete(item.id, item.name, item.running)}
+                          disabled={isRunning}
+                          className={`p-2 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl transition-all ${
+                            isRunning 
+                              ? 'opacity-40 cursor-not-allowed text-slate-300 dark:text-slate-700' 
+                              : 'hover:bg-red-50 dark:hover:bg-red-500/10 text-slate-500 dark:text-slate-400 hover:text-red-600 dark:hover:text-red-400 hover:border-red-200 dark:hover:border-red-500/20 cursor-pointer'
+                          }`}
+                          title={isRunning ? "Running configuration cannot be deleted" : "Delete Config"}
                         >
                           <Trash2 className="w-4 h-4" />
                         </button>
