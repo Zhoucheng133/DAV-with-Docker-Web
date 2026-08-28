@@ -159,7 +159,7 @@ export default function Dashboard() {
   const handleRunStop = async (item: ConfigItem) => {
     try {
       if (item.running === 1) {
-        const res = await api.get<ApiResponse>(`/api/config/stop/${item.id}`);
+        const res = await api.post<ApiResponse>(`/api/config/stop/${item.id}`);
         if (res.data && res.data.ok) {
           setSuccessMsg(`Stopped server: ${item.name}`);
           fetchConfigs();
