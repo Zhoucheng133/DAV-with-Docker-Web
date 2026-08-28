@@ -14,8 +14,7 @@ import {
   User as UserIcon, 
   HardDrive, 
   X, 
-  AlertCircle,
-  CheckCircle2
+  AlertCircle
 } from 'lucide-react';
 import { ThemeToggle } from './ThemeToggle';
 
@@ -33,12 +32,11 @@ export default function Dashboard() {
   const [configs, setConfigs] = useState<ConfigItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
-  const [error, setError] = useState('');
-  const [successMsg, setSuccessMsg] = useState('');
 
   // Modal states
   const [isAddOpen, setIsAddOpen] = useState(false);
   const [editItem, setEditItem] = useState<ConfigItem | null>(null);
+  const [errorModalMsg, setErrorModalMsg] = useState('');
 
   // Form states for Add/Edit
   const [formName, setFormName] = useState('');
@@ -54,17 +52,16 @@ export default function Dashboard() {
   const fetchConfigs = async (isManualRefresh = false) => {
     if (isManualRefresh) setRefreshing(true);
     else setLoading(true);
-    setError('');
 
     try {
       const res = await api.get<ApiResponse<ConfigItem[]>>('/api/config/list');
       if (res.data && res.data.ok) {
         setConfigs(res.data.data || []);
       } else {
-        setError(typeof res.data.data === 'string' ? res.data.data : 'Failed to fetch configs');
+        setErrorModalMsg(typeof res.data.data === 'string' ? res.data.data : 'Failed to fetch configs');
       }
     } catch (err: any) {
-      setError(err.response?.data?.data || err.message || 'Network error');
+      setErrorModalMsg(err.response?.data?.data || err.message || 'Network error');
     } finally {
       setLoading(false);
       setRefreshing(false);
@@ -108,7 +105,6 @@ export default function Dashboard() {
   const handleSaveConfig = async (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitting(true);
-    setError('');
 
     try {
       if (editItem) {
@@ -124,11 +120,10 @@ export default function Dashboard() {
         }
         const res = await api.post<ApiResponse>(`/api/config/edit/${editItem.id}`, payload);
         if (res.data && res.data.ok) {
-          setSuccessMsg('Config updated successfully');
           setIsAddOpen(false);
           fetchConfigs();
         } else {
-          setError(typeof res.data.data === 'string' ? res.data.data : 'Failed to update config');
+          setErrorModalMsg(typeof res.data.data === 'string' ? res.data.data : 'Failed to update config');
         }
       } else {
         const payload = {
@@ -141,18 +136,16 @@ export default function Dashboard() {
         };
         const res = await api.post<ApiResponse>('/api/config/add', payload);
         if (res.data && res.data.ok) {
-          setSuccessMsg('Config added successfully');
           setIsAddOpen(false);
           fetchConfigs();
         } else {
-          setError(typeof res.data.data === 'string' ? res.data.data : 'Failed to add config');
+          setErrorModalMsg(typeof res.data.data === 'string' ? res.data.data : 'Failed to add config');
         }
       }
     } catch (err: any) {
-      setError(err.response?.data?.data || err.message || 'Operation failed');
+      setErrorModalMsg(err.response?.data?.data || err.message || 'Operation failed');
     } finally {
       setSubmitting(false);
-      setTimeout(() => setSuccessMsg(''), 4000);
     }
   };
 
@@ -161,24 +154,20 @@ export default function Dashboard() {
       if (item.running === 1) {
         const res = await api.post<ApiResponse>(`/api/config/stop/${item.id}`);
         if (res.data && res.data.ok) {
-          setSuccessMsg(`Stopped server: ${item.name}`);
           fetchConfigs();
         } else {
-          setError(typeof res.data.data === 'string' ? res.data.data : 'Failed to stop server');
+          setErrorModalMsg(typeof res.data.data === 'string' ? res.data.data : 'Failed to stop server');
         }
       } else {
         const res = await api.post<ApiResponse>(`/api/config/run/${item.id}`);
         if (res.data && res.data.ok) {
-          setSuccessMsg(`Started server: ${item.name}`);
           fetchConfigs();
         } else {
-          setError(typeof res.data.data === 'string' ? res.data.data : 'Failed to start server');
+          setErrorModalMsg(typeof res.data.data === 'string' ? res.data.data : 'Failed to start server');
         }
       }
     } catch (err: any) {
-      setError(err.response?.data?.data || err.message || 'Action failed');
-    } finally {
-      setTimeout(() => setSuccessMsg(''), 4000);
+      setErrorModalMsg(err.response?.data?.data || err.message || 'Action failed');
     }
   };
 
@@ -188,15 +177,12 @@ export default function Dashboard() {
     try {
       const res = await api.delete<ApiResponse>(`/api/config/del/${id}`);
       if (res.data && res.data.ok) {
-        setSuccessMsg(`Deleted config: ${name}`);
         fetchConfigs();
       } else {
-        setError(typeof res.data.data === 'string' ? res.data.data : 'Failed to delete config');
+        setErrorModalMsg(typeof res.data.data === 'string' ? res.data.data : 'Failed to delete config');
       }
     } catch (err: any) {
-      setError(err.response?.data?.data || err.message || 'Delete failed');
-    } finally {
-      setTimeout(() => setSuccessMsg(''), 4000);
+      setErrorModalMsg(err.response?.data?.data || err.message || 'Delete failed');
     }
   };
 
@@ -240,30 +226,6 @@ export default function Dashboard() {
 
       {/* Main Content */}
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {error && (
-          <div className="mb-6 p-4 bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/20 rounded-xl flex items-center justify-between text-red-600 dark:text-red-400 text-sm">
-            <div className="flex items-center gap-3">
-              <AlertCircle className="w-5 h-5 shrink-0" />
-              <span>{error}</span>
-            </div>
-            <button onClick={() => setError('')} className="text-red-500 hover:text-red-700 dark:hover:text-red-300 cursor-pointer">
-              <X className="w-4 h-4" />
-            </button>
-          </div>
-        )}
-
-        {successMsg && (
-          <div className="mb-6 p-4 bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/20 rounded-xl flex items-center justify-between text-emerald-600 dark:text-emerald-400 text-sm">
-            <div className="flex items-center gap-3">
-              <CheckCircle2 className="w-5 h-5 shrink-0" />
-              <span>{successMsg}</span>
-            </div>
-            <button onClick={() => setSuccessMsg('')} className="text-emerald-500 hover:text-emerald-700 dark:hover:text-emerald-300 cursor-pointer">
-              <X className="w-4 h-4" />
-            </button>
-          </div>
-        )}
-
         <div className="flex items-center justify-between mb-6">
           <div>
             <h2 className="text-lg font-bold text-slate-900 dark:text-slate-100">Configurations</h2>
@@ -511,6 +473,26 @@ export default function Dashboard() {
                 </button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+
+      {errorModalMsg && (
+        <div className="fixed inset-0 z-50 bg-slate-900/40 dark:bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl w-full max-w-sm shadow-2xl overflow-hidden p-6 text-center space-y-4">
+            <div className="w-12 h-12 bg-red-50 dark:bg-red-500/10 text-red-600 dark:text-red-400 rounded-full flex items-center justify-center mx-auto">
+              <AlertCircle className="w-6 h-6" />
+            </div>
+            <div>
+              <h3 className="font-bold text-slate-900 dark:text-slate-100 text-lg mb-1">Error</h3>
+              <p className="text-xs text-slate-500 dark:text-slate-400">{errorModalMsg}</p>
+            </div>
+            <button
+              onClick={() => setErrorModalMsg('')}
+              className="w-full bg-slate-900 dark:bg-slate-800 hover:bg-slate-800 dark:hover:bg-slate-700 text-white py-2.5 rounded-xl text-sm font-medium transition-all cursor-pointer"
+            >
+              OK
+            </button>
           </div>
         </div>
       )}
