@@ -50,12 +50,7 @@ export function AuthGuard() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-slate-950 text-slate-100">
-        <div className="flex flex-col items-center gap-4">
-          <div className="w-8 h-8 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin"></div>
-          <p className="text-sm font-medium text-slate-400">Loading application...</p>
-        </div>
-      </div>
+      <div></div>
     );
   }
 
