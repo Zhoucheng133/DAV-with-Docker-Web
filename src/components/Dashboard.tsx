@@ -221,7 +221,7 @@ export default function Dashboard() {
             <button
               onClick={() => fetchConfigs(true)}
               disabled={refreshing}
-              className="flex items-center gap-2 bg-white dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 px-3.5 py-2 rounded-xl text-xs font-medium text-slate-700 dark:text-slate-300 transition-all disabled:opacity-50 shadow-sm"
+              className="flex items-center gap-2 bg-white dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 px-3.5 py-2 rounded-xl text-xs font-medium text-slate-700 dark:text-slate-300 transition-all disabled:opacity-50 shadow-sm cursor-pointer"
             >
               <RefreshCw className={`w-3.5 h-3.5 ${refreshing ? 'animate-spin' : ''}`} />
               <span>Refresh</span>
@@ -229,7 +229,7 @@ export default function Dashboard() {
 
             <button
               onClick={handleLogout}
-              className="flex items-center gap-2 bg-red-50 dark:bg-red-500/10 hover:bg-red-100 dark:hover:bg-red-500/20 border border-red-200 dark:border-red-500/20 px-3.5 py-2 rounded-xl text-xs font-medium text-red-600 dark:text-red-400 transition-all shadow-sm"
+              className="flex items-center gap-2 bg-red-50 dark:bg-red-500/10 hover:bg-red-100 dark:hover:bg-red-500/20 border border-red-200 dark:border-red-500/20 px-3.5 py-2 rounded-xl text-xs font-medium text-red-600 dark:text-red-400 transition-all shadow-sm cursor-pointer"
             >
               <LogOut className="w-3.5 h-3.5" />
               <span>Logout</span>
@@ -246,7 +246,7 @@ export default function Dashboard() {
               <AlertCircle className="w-5 h-5 shrink-0" />
               <span>{error}</span>
             </div>
-            <button onClick={() => setError('')} className="text-red-500 hover:text-red-700 dark:hover:text-red-300">
+            <button onClick={() => setError('')} className="text-red-500 hover:text-red-700 dark:hover:text-red-300 cursor-pointer">
               <X className="w-4 h-4" />
             </button>
           </div>
@@ -258,7 +258,7 @@ export default function Dashboard() {
               <CheckCircle2 className="w-5 h-5 shrink-0" />
               <span>{successMsg}</span>
             </div>
-            <button onClick={() => setSuccessMsg('')} className="text-emerald-500 hover:text-emerald-700 dark:hover:text-emerald-300">
+            <button onClick={() => setSuccessMsg('')} className="text-emerald-500 hover:text-emerald-700 dark:hover:text-emerald-300 cursor-pointer">
               <X className="w-4 h-4" />
             </button>
           </div>
@@ -272,7 +272,7 @@ export default function Dashboard() {
 
           <button
             onClick={openAddModal}
-            className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2.5 rounded-xl text-sm font-medium transition-all shadow-lg shadow-indigo-600/20"
+            className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2.5 rounded-xl text-sm font-medium transition-all shadow-lg shadow-indigo-600/20 cursor-pointer"
           >
             <Plus className="w-4 h-4" />
             <span>Add Config</span>
@@ -292,7 +292,7 @@ export default function Dashboard() {
             <p className="text-xs text-slate-400 dark:text-slate-500 mb-6">Get started by creating your first WebDAV config item.</p>
             <button
               onClick={openAddModal}
-              className="inline-flex items-center gap-2 bg-slate-100 dark:bg-slate-900 hover:bg-slate-200 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200 px-4 py-2 rounded-xl text-sm font-medium transition-all shadow-sm"
+              className="inline-flex items-center gap-2 bg-slate-100 dark:bg-slate-900 hover:bg-slate-200 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200 px-4 py-2 rounded-xl text-sm font-medium transition-all shadow-sm cursor-pointer"
             >
               <Plus className="w-4 h-4" />
               <span>Add Config</span>
@@ -334,14 +334,14 @@ export default function Dashboard() {
                       <div className="flex items-center gap-1">
                         <button
                           onClick={() => openEditModal(item)}
-                          className="p-2 bg-slate-50 dark:bg-slate-950 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 rounded-xl border border-slate-200 dark:border-slate-800 transition-all"
+                          className="p-2 bg-slate-50 dark:bg-slate-950 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 rounded-xl border border-slate-200 dark:border-slate-800 transition-all cursor-pointer"
                           title="Edit Config"
                         >
                           <Edit3 className="w-4 h-4" />
                         </button>
                         <button
                           onClick={() => handleDelete(item.id, item.name)}
-                          className="p-2 bg-slate-50 dark:bg-slate-950 hover:bg-red-50 dark:hover:bg-red-500/10 text-slate-500 dark:text-slate-400 hover:text-red-600 dark:hover:text-red-400 rounded-xl border border-slate-200 dark:border-slate-800 hover:border-red-200 dark:hover:border-red-500/20 transition-all"
+                          className="p-2 bg-slate-50 dark:bg-slate-950 hover:bg-red-50 dark:hover:bg-red-500/10 text-slate-500 dark:text-slate-400 hover:text-red-600 dark:hover:text-red-400 rounded-xl border border-slate-200 dark:border-slate-800 hover:border-red-200 dark:hover:border-red-500/20 transition-all cursor-pointer"
                           title="Delete Config"
                         >
                           <Trash2 className="w-4 h-4" />
@@ -378,7 +378,7 @@ export default function Dashboard() {
                   <div className="pt-4 border-t border-slate-100 dark:border-slate-800/80 flex items-center gap-2">
                     <button
                       onClick={() => handleRunStop(item)}
-                      className={`flex-1 flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl text-xs font-medium transition-all ${
+                      className={`flex-1 flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl text-xs font-medium transition-all cursor-pointer ${
                         isRunning
                           ? 'bg-amber-50 dark:bg-amber-500/10 hover:bg-amber-100 dark:hover:bg-amber-500/20 text-amber-600 dark:text-amber-400 border border-amber-200 dark:border-amber-500/20'
                           : 'bg-emerald-50 dark:bg-emerald-500/10 hover:bg-emerald-100 dark:hover:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-500/20'
@@ -413,7 +413,7 @@ export default function Dashboard() {
               </h3>
               <button
                 onClick={() => setIsAddOpen(false)}
-                className="text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 p-1 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-all"
+                className="text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 p-1 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-all cursor-pointer"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -495,14 +495,14 @@ export default function Dashboard() {
                 <button
                   type="button"
                   onClick={() => setIsAddOpen(false)}
-                  className="px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 text-sm font-medium transition-all"
+                  className="px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 text-sm font-medium transition-all cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="bg-indigo-600 hover:bg-indigo-500 text-white px-5 py-2.5 rounded-xl text-sm font-medium transition-all shadow-lg shadow-indigo-600/20 disabled:opacity-50 flex items-center gap-2"
+                  className="bg-indigo-600 hover:bg-indigo-500 text-white px-5 py-2.5 rounded-xl text-sm font-medium transition-all shadow-lg shadow-indigo-600/20 disabled:opacity-50 flex items-center gap-2 cursor-pointer"
                 >
                   {submitting && (
                     <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>

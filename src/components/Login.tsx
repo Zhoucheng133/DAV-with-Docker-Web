@@ -43,9 +43,9 @@ export default function Login() {
       </div>
 
       <div className="max-w-md w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl p-8 transition-colors">
-        <div className="flex flex-col items-center mb-8">
+        <div className="flex flex-col items-start mb-8">
           <div className="mb-4">
-            <img src="/icon.svg" alt="Logo" className="w-16 h-16" />
+            <img src="/icon.svg" alt="Logo" className="w-14 h-14" />
           </div>
           <h1 className="text-2xl font-bold text-slate-900 dark:text-slate-100">Dav Docker Console</h1>
           <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">Sign in to manage your WebDAV servers</p>
@@ -100,7 +100,7 @@ export default function Login() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full mt-2 bg-indigo-600 hover:bg-indigo-500 text-white font-medium py-3 px-4 rounded-xl text-sm transition-all shadow-lg shadow-indigo-600/20 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+            className="w-full mt-2 bg-indigo-600 hover:bg-indigo-500 text-white font-medium py-3 px-4 rounded-xl text-sm transition-all shadow-lg shadow-indigo-600/20 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 cursor-pointer"
           >
             {loading ? (
               <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
