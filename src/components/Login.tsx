@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api, { type ApiResponse } from '../api';
+import { useTranslation } from 'react-i18next';
 import { Lock, User as UserIcon, AlertCircle } from 'lucide-react';
 import { ThemeToggle } from './ThemeToggle';
+import { LanguageSelector } from './LanguageSelector';
 
 export default function Login() {
+  const { t } = useTranslation();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -14,7 +17,7 @@ export default function Login() {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!username || !password) {
-      setError('Please fill in all fields');
+      setError(t('fill_all_fields'));
       return;
     }
     setError('');
@@ -27,10 +30,10 @@ export default function Login() {
         localStorage.setItem('dav_token', token);
         navigate('/', { replace: true });
       } else {
-        setError(res.data.data || 'Login failed');
+        setError(res.data.data || t('login_failed'));
       }
     } catch (err: any) {
-      setError(err.response?.data?.data || err.message || 'Network error');
+      setError(err.response?.data?.data || err.message || t('network_error'));
     } finally {
       setLoading(false);
     }
@@ -38,7 +41,8 @@ export default function Login() {
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex items-center justify-center p-4 sm:p-6 relative transition-colors">
-      <div className="absolute top-4 right-4">
+      <div className="absolute top-4 right-4 flex items-center gap-2">
+        <LanguageSelector />
         <ThemeToggle />
       </div>
 
@@ -47,8 +51,8 @@ export default function Login() {
           <div className="mb-4">
             <img src="/icon.svg" alt="Logo" className="w-12 h-12 sm:w-14 sm:h-14" />
           </div>
-          <h1 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-slate-100">Dav Docker Console</h1>
-          <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">Sign in to manage your WebDAV servers</p>
+          <h1 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-slate-100">{t('login_title')}</h1>
+          <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">{t('login_subtitle')}</p>
         </div>
 
         {error && (
@@ -61,7 +65,7 @@ export default function Login() {
         <form onSubmit={handleLogin} className="space-y-4">
           <div>
             <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-2">
-              Username
+              {t('username_label')}
             </label>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400 dark:text-slate-500">
@@ -71,7 +75,7 @@ export default function Login() {
                 type="text"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                placeholder="Enter your username"
+                placeholder={t('username_placeholder')}
                 className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 pl-10 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-600 text-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all"
                 required
               />
@@ -80,7 +84,7 @@ export default function Login() {
 
           <div>
             <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-2">
-              Password
+              {t('password_label')}
             </label>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400 dark:text-slate-500">
@@ -90,7 +94,7 @@ export default function Login() {
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="Enter your password"
+                placeholder={t('password_placeholder')}
                 className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 pl-10 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-600 text-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all"
                 required
               />
@@ -105,7 +109,7 @@ export default function Login() {
             {loading ? (
               <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
             ) : (
-              'Sign In'
+              t('sign_in')
             )}
           </button>
         </form>

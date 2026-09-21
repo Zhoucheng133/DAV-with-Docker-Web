@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api, { type ApiResponse } from '../api';
+import { useTranslation } from 'react-i18next';
 import { Lock, User as UserIcon, AlertCircle } from 'lucide-react';
 import { ThemeToggle } from './ThemeToggle';
+import { LanguageSelector } from './LanguageSelector';
 
 export default function Register() {
+  const { t } = useTranslation();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -15,11 +18,11 @@ export default function Register() {
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!username || !password || !confirmPassword) {
-      setError('Please fill in all fields');
+      setError(t('fill_all_fields'));
       return;
     }
     if (password !== confirmPassword) {
-      setError('Passwords do not match');
+      setError(t('passwords_not_match'));
       return;
     }
     setError('');
@@ -36,10 +39,10 @@ export default function Register() {
           navigate('/login', { replace: true });
         }
       } else {
-        setError(res.data.data || 'Registration failed');
+        setError(res.data.data || t('registration_failed'));
       }
     } catch (err: any) {
-      setError(err.response?.data?.data || err.message || 'Network error');
+      setError(err.response?.data?.data || err.message || t('network_error'));
     } finally {
       setLoading(false);
     }
@@ -47,7 +50,8 @@ export default function Register() {
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex items-center justify-center p-4 sm:p-6 relative transition-colors">
-      <div className="absolute top-4 right-4">
+      <div className="absolute top-4 right-4 flex items-center gap-2">
+        <LanguageSelector />
         <ThemeToggle />
       </div>
 
@@ -56,8 +60,8 @@ export default function Register() {
           <div className="mb-4">
             <img src="/icon.svg" alt="Logo" className="w-12 h-12 sm:w-14 sm:h-14" />
           </div>
-          <h1 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-slate-100">Initialize Admin</h1>
-          <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">Set up your administrator credentials</p>
+          <h1 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-slate-100">{t('init_admin')}</h1>
+          <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">{t('init_admin_subtitle')}</p>
         </div>
 
         {error && (
@@ -70,7 +74,7 @@ export default function Register() {
         <form onSubmit={handleRegister} className="space-y-4">
           <div>
             <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-2">
-              Username
+              {t('username_label')}
             </label>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400 dark:text-slate-500">
@@ -80,7 +84,7 @@ export default function Register() {
                 type="text"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                placeholder="Choose a username"
+                placeholder={t('choose_username')}
                 className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 pl-10 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-600 text-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all"
                 required
               />
@@ -89,7 +93,7 @@ export default function Register() {
 
           <div>
             <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-2">
-              Password
+              {t('password_label')}
             </label>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400 dark:text-slate-500">
@@ -99,7 +103,7 @@ export default function Register() {
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="Choose a password"
+                placeholder={t('choose_password')}
                 className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 pl-10 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-600 text-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all"
                 required
               />
@@ -108,7 +112,7 @@ export default function Register() {
 
           <div>
             <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-2">
-              Confirm Password
+              {t('confirm_password')}
             </label>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400 dark:text-slate-500">
@@ -118,7 +122,7 @@ export default function Register() {
                 type="password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                placeholder="Confirm your password"
+                placeholder={t('confirm_password_placeholder')}
                 className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 pl-10 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-600 text-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all"
                 required
               />
@@ -133,7 +137,7 @@ export default function Register() {
             {loading ? (
               <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
             ) : (
-              'Complete Setup'
+              t('complete_setup')
             )}
           </button>
         </form>
