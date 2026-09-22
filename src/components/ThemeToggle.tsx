@@ -61,7 +61,7 @@ export function ThemeToggle() {
       {theme === 'dark' && <Moon className="w-3.5 h-3.5 text-indigo-400" />}
       {theme === 'light' && <Sun className="w-3.5 h-3.5 text-amber-500" />}
       {theme === 'system' && <Monitor className="w-3.5 h-3.5 text-slate-400" />}
-      <span className="capitalize">{theme}</span>
+      <span className="hidden sm:inline capitalize">{theme}</span>
     </button>
   );
 }

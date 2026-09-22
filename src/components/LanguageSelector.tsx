@@ -17,11 +17,11 @@ export function LanguageSelector() {
       <select
         value={i18n.language}
         onChange={changeLanguage}
-        className="appearance-none bg-white dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 pl-8 pr-8 py-2 rounded-xl text-xs font-medium text-slate-700 dark:text-slate-300 transition-all shadow-sm cursor-pointer focus:outline-none focus:border-indigo-500"
+        className="appearance-none bg-white dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 w-12 sm:w-auto sm:pl-8 sm:pr-8 py-2 rounded-xl text-xs font-medium text-transparent sm:text-slate-700 dark:sm:text-slate-300 transition-all shadow-sm cursor-pointer focus:outline-none focus:border-indigo-500 overflow-hidden text-ellipsis"
       >
-        <option value="en">English</option>
-        <option value="zh-CN">简体中文</option>
-        <option value="zh-TW">繁體中文</option>
+        <option value="en" className="text-slate-900 dark:text-slate-100">English</option>
+        <option value="zh-CN" className="text-slate-900 dark:text-slate-100">简体中文</option>
+        <option value="zh-TW" className="text-slate-900 dark:text-slate-100">繁體中文</option>
       </select>
       <div className="absolute inset-y-0 right-0 pr-2.5 flex items-center pointer-events-none text-slate-400">
         <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
